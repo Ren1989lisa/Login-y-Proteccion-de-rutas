@@ -1,54 +1,35 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
-import { users } from "./users";
+import AdminTable from "./pages/AdminTable";
+import ProtectedRoutes from "./routes/ProtectedRoutes";
+import { useAuth } from "./context/AuthContext";
 
 function App() {
-
-  const [Usuarioactual, setUsuarioactual] = useState(null);
-
-  const login = (username, password) => {
-    const Usuarioencontrado = users.find(
-      (u) => u.user === username && u.password === password
-    );
-
-    if (Usuarioencontrado) {
-      setUsuarioactual(Usuarioencontrado);
-      return true;
-    }
-    return false;
-  };
-
-  const logout = () => {
-    setUsuarioactual(null);
-  };
+  const { user } = useAuth();
 
   return (
     <Routes>
-
+      {/* Ruta pública */}
       <Route
-        path="/"
-        element={
-          Usuarioactual
-            ? <Navigate to="/profile" />
-            : <Login login={login} />
-        }
+        path="/login"
+        element={user ? <Navigate to="/profile" /> : <Login />}
       />
 
-      <Route
-        path="/profile"
-        element={
-          Usuarioactual && Usuarioactual.role === "user"
-            ? <Profile user={Usuarioactual} logout={logout} />
-            : <Navigate to="/" />
-        }
-      />
+      {/* Rutas protegidas */}
+      <Route element={<ProtectedRoutes />}>
+        <Route path="/profile" 
+        element={<Profile />} />
+      </Route>
 
-      <Route path="*" element={<Navigate to="/" />} />
+      {/* Solo admin */}
+      <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
+        <Route path="/admin" 
+        element={<AdminTable />} />
+      </Route>
 
+      <Route path="*" 
+      element={<Navigate to="/login" />} />
     </Routes>
   );
 }
-
-export default App;
