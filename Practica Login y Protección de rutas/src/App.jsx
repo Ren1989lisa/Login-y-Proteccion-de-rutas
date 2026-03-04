@@ -8,7 +8,7 @@ import { useAuth } from "./context/AuthContext";
 
 function App() {
   const { user } = useAuth();
-
+  
   return (
     <Routes>
 
@@ -18,12 +18,16 @@ function App() {
       {/* Ruta pública */}
       <Route
         path="/login"
-        element={user ? <Navigate to="/profile" /> : <Login />}
+        element={
+         user
+         ? <Navigate to={`/profile/${user.username}`} />
+         : <Login />
+         }    
       />
 
       {/* Rutas protegidas para cualquier usuario autenticado */}
       <Route element={<ProtectedRoutes />}>
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:username" element={<Profile />} />
       </Route>
 
       {/* Ruta solo para admin */}
