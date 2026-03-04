@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { UseNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Boton from "../Componentes/Boton"
+import Input from "../Componentes/Input"
 import { useAuth } from "../context/AuthContext";
-import Boton from "../Componentes/Boton";
 
 function Login() {
-    const navigate = UseNavigate();
-    const { login } = useAuth;
+    const navigate = useNavigate();
+    const { login } = useAuth();
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
@@ -31,28 +31,28 @@ function Login() {
         }
     };
     return (
-        <>
         <div>
             <h1>Login</h1>
 
-            <input
+            <Input
             type="text"
             placeholder="Usuario"
-            onChange={(event) => setUsername(event.target.value)}
+            value={username}
+            onChange={setUsername}
             />
 
-            <input
+            <Input
             type="password"
             placeholder="Contraseña"
-            onChange={(event) => setPassword(event.target.value)}
+            value={password}
+            onChange={setPassword}
             />
 
             <Boton
             text="Iniciar Sesión"
-            action={{handleLogin}}
+            action={handleLogin}
             />
         </div>
-        </>
     )
 }
 
