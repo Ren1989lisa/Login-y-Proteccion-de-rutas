@@ -1,25 +1,28 @@
-.boton-primary{
-  background-color: rgb(37, 53, 196);
+.boton-primary {
+  background-color: #4f7ef8;
   border: none;
   border-radius: 30px;
   min-width: 10px;
   height: 30px;
-  margin: 10px;
+  margin: 10px auto;
   color: white;
   display: block;
+  transition: background-color 0.2s;
 }
 
 .boton-primary:hover {
-    background-color: rgb(24, 36, 145);
-    cursor: pointer;
+  background-color: #2563eb;
+  cursor: pointer;
 }
 
 .input {
   display: block;
   width: 200px;
   height: 30px;
-  margin: 10px;
+  margin: 10px auto;
   padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  border-radius: 8px;
+  border: 1px solid #bfcfe8;
+  background-color: #ffffff;
+  color: #334155;
 }
